@@ -1,21 +1,13 @@
 # Vercel Serverless Function Entry Point
-# This file is required for Vercel to recognize the Python backend
-
 import sys
 import os
 
-# Add parent directory to path to import app_scenario
+# Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# Import the Flask app
 from app_scenario import app
 
-# Vercel will call this handler
-def handler(event, context):
-    """
-    Vercel serverless function handler
-    """
-    return app
-
-# For Vercel, we need to export the Flask app
-# Vercel will handle the WSGI interface
-app = app
+# Export the app for Vercel
+# Vercel will automatically handle WSGI
+handler = app
