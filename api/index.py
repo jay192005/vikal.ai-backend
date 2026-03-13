@@ -3,11 +3,15 @@ import sys
 import os
 
 # Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
 
-# Import the Flask app
+# Set environment variable to indicate we're in Vercel
+os.environ['VERCEL'] = '1'
+
+# Import Flask app
 from app_scenario import app
 
-# Export the app for Vercel
-# Vercel will automatically handle WSGI
-handler = app
+# Vercel will call this app
+# No need for additional wrapper
