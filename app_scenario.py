@@ -21,18 +21,19 @@ from firebase_auth import initialize_firebase_auth, require_auth
 app = Flask(__name__)
 
 # Configure CORS for development and production
-# Allow requests from local development and Firebase Hosting
+# Allow requests from local development, Vercel, and Firebase Hosting
 allowed_origins = [
     "http://localhost:5173",  # Vite dev server
     "http://localhost:3000",  # Alternative dev port
+    "https://vikalp-ai-frontend.vercel.app",  # Vercel production
+    "https://vikalp-ai-frontend-hp6x576ue-jay192005s-projects.vercel.app",  # Vercel preview
     "https://gdp-grow-prediction-model.web.app",  # Firebase Hosting
     "https://gdp-grow-prediction-model.firebaseapp.com",  # Firebase Hosting alternative
 ]
 
-# In production, you might want to add your custom domain
-# allowed_origins.append("https://your-custom-domain.com")
-
-CORS(app, origins=allowed_origins, supports_credentials=True)
+# Allow all Vercel preview deployments
+CORS(app, origins=allowed_origins, supports_credentials=True, 
+     resources={r"/*": {"origins": "*"}})
 
 # Global variables
 model = None
